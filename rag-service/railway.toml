@@ -1,0 +1,12 @@
+# Railway config — set service root directory to rag-service/ in the dashboard.
+# Docs: https://docs.railway.com/guides/monorepo
+
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+healthcheckPath = "/health"
+healthcheckTimeout = 300
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 5

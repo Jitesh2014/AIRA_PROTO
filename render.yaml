@@ -1,0 +1,65 @@
+# Render Blueprint — deploy the API from the server/ folder.
+# Docs: https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: aira-api
+    runtime: node
+    rootDir: server
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      - key: CORS_ORIGINS
+        sync: false
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: AUTH_SKIP_PASSWORD
+        value: "false"
+      - key: SUPER_ADMIN_EMAIL
+        sync: false
+      - key: SUPER_ADMIN_PASSWORD
+        sync: false
+      - key: SUPER_ADMIN_NAME
+        value: Super Admin
+      # Redis Cloud public endpoint (rediss://...)
+      - key: REDIS_URL
+        sync: false
+      # Railway RAG service URL, e.g. https://aira-rag.up.railway.app
+      - key: RAG_SERVICE_URL
+        sync: false
+      - key: RAG_API_KEY
+        sync: false
+      # Optional — Tavily web supplement (chapter-scoped, RAG-first)
+      - key: WEB_SEARCH_ENABLED
+        value: "false"
+      - key: TAVILY_API_KEY
+        sync: false
+      - key: WEB_SEARCH_TIMEOUT_MS
+        value: "15000"
+      # Cloud LLM — Groq intent + Phi-4-mini + Qwen3.5-9B
+      - key: LLM_MODE
+        value: cloud
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GROQ_INTENT_MODEL
+        value: llama-3.1-8b-instant
+      - key: PHI_API_KEY
+        sync: false
+      - key: PHI_BASE_URL
+        sync: false
+      - key: PHI_MODEL
+        value: Phi-4-mini
+      - key: PHI_API_VERSION
+        value: 2024-05-01-preview
+      - key: QWEN_API_KEY
+        sync: false
+      - key: QWEN_BASE_URL
+        value: https://api.deepinfra.com/v1/openai
+      - key: QWEN_MODEL
+        value: Qwen/Qwen3.5-9B
